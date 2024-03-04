@@ -7,8 +7,10 @@ Go through the [issues list here](https://github.com/sg22-c-cpp-standard-compati
 
 # Chairs
 
-Nina Dinka Ranns
-JeanHeyd Meneide
+- Nina Dinka Ranns (primarily Working Group 21 - C++)
+- [JeanHeyd Meneide (primarily Working Group 14 - C)](mailto:wg14@soasis.org)
+
+Feel free to contact us when necessary.
 
 
 # Useful Reading
@@ -25,8 +27,8 @@ This document contains summaries of SG22 meetings held during 2024.
 
 # February 1st, 2024 - Provenance Memory Model Discussion between C and C++
 
-Start: 17:05 UTC
-End: 18:11 UTC
+- Start: 17:05 UTC
+- End: 18:11 UTC
 
 ## Agenda
 [P2318: A Provenance-aware Memory Object Model for C](https://www.open-std.org/jtc1/sc22/wg21/docs/papers/2021/p2318r1.pdf)
@@ -41,7 +43,7 @@ End: 18:11 UTC
 - Jens Gustedt (Author)
 - Joshua Cranmer
 - Kayvan Memarian (Author)
-- Martin Uecker  (Author)
+- Martin Uecker	(Author)
 - Nathan Owen
 - Michael Wong
 - Peter Sewell (Author)
@@ -52,10 +54,10 @@ End: 18:11 UTC
 ## Meeting summary
 - Davis Herring: We can discuss one paper or another if people have familiarity, but we can start by discussing both papers and then dovetail into P2434R0 (Scribe Note: P2318 is an)
 - Jens: I can give an overview of P2318 and its current status
-  - Came out of long process for C and its memory model study group, met with C++ in Köln (Scribe Note: English spelling is Cologne, in Germany) in some ways to discuss this
-  - WG14 chose a model that they would like to apply to their standard (model name: PNVI-ae-udi)
-  - Difficulty with ISO accepting the TS that sourced P2318, and so that results in the current status where it is not fully published as its own TS
-  - We will publish a new TS that textually describes what is in front of us with P2318r1 and its diff.
+	- Came out of long process for C and its memory model study group, met with C++ in Köln (Scribe Note: English spelling is Cologne, in Germany) in some ways to discuss this
+	- WG14 chose a model that they would like to apply to their standard (model name: PNVI-ae-udi)
+	- Difficulty with ISO accepting the TS that sourced P2318, and so that results in the current status where it is not fully published as its own TS
+	- We will publish a new TS that textually describes what is in front of us with P2318r1 and its diff.
 - Nina: And so this would just be a TS?
 - Jens: No, not in the standard or C23, just in a TS. We took a vote and it should get into the standard in C2Y, but it depends on the feedback of the TS (Scribe Note: not guaranteed to go into C2Y).
 - Nina: Is there implementation experience of this?
@@ -69,7 +71,7 @@ End: 18:11 UTC
 - Nina: Ah, can I pass you the presenter?
 - Davis: (Scribe Note: Davis cannot present from his current location and setup, Nina agrees to display the paper P2434r0 on the screen.)
 - Davis: (Scribe Note: explanation of the paper which is effectively reading from it and narrating the logic shown in the examples and written down in the paper.)
-  - … It is nondeterministic to observe the pointer there, and what we want to do is get rid of that part of the specification and simply leave it as undefined behavior or as close to that as possible without a rigorous specification of exactly how we arrive at that conclusion (so-called "angelic nondeterminism")—
+	- … It is nondeterministic to observe the pointer there, and what we want to do is get rid of that part of the specification and simply leave it as undefined behavior or as close to that as possible without a rigorous specification of exactly how we arrive at that conclusion (so-called "angelic nondeterminism")—
 - Peter: (Interjecting) What you're describing is exactly what PNV-ae-udi, so I am confused as to why we want to get rid of that specification here especially if we're arriving at the same answer...?
 - Davis: I am not suggesting we should, that's good! We're just saying we can get to the same point with less provenance and less modeling here.
 - Peter: Well... okay, just continue.
@@ -89,7 +91,7 @@ End: 18:11 UTC
 (Scribe note: we begin talking about the superposition of interpretations of pointers here and this is where the Scribe starts getting very lost.)
 
 - Davis: So this is problematic because specifying how the set of values that computes the superposition of pointer values, and then casting it from an integer back to a pointer we collapse that down into a single pointer and you have to pick an interpretation from all of those potential (valid, invalid, etc.) superpositions.
-- Peter: So I think the difference between the reasonings between this paper and the C TS is that one is the superposition of all pointer values  and provenances that eventually gets collapsed into one (P2434, angelic nondeterminism), versus the interpretation that there a superposition of all interpretations of provenances that get projected forward to figure out the right one (e.g., the user compared the integer values from the pointers and found they were correct, P2318, effective types).
+- Peter: So I think the difference between the reasonings between this paper and the C TS is that one is the superposition of all pointer values	and provenances that eventually gets collapsed into one (P2434, angelic nondeterminism), versus the interpretation that there a superposition of all interpretations of provenances that get projected forward to figure out the right one (e.g., the user compared the integer values from the pointers and found they were correct, P2318, effective types).
 
 (Scribe Note: Davis and Peter go back and forth and at some point this gets into concurrency with provenance models and such, and at this point the scribe is now lost. Apologies.)
 
