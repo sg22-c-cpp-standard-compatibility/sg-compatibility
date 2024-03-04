@@ -25,8 +25,9 @@ This document contains summaries of SG22 meetings held during 2024.
 - [February 1st, 2024](#February-1st-2024) - Provenance and Memory Model Discussion
 
 
-# February 1st, 2024 - Provenance Memory Model Discussion between C and C++
+# February 1st, 2024
 
+- Topic: Provenance Memory Model Discussion between C and C++
 - Start: 17:05 UTC
 - End: 18:11 UTC
 
