@@ -142,7 +142,6 @@ Nina: No objection to striking that clause
 Nina:
 It would be better to bring a more complete analysis of this issue.
 
-Nina:
 
 ## Polls
 
