@@ -36,15 +36,15 @@ This document contains summaries of SG22 meetings held during 2024.
 - [P2866 Remove Deprecated Volatile Features From C++26](https://github.com/cplusplus/papers/issues/1556)
 
 ## Attendees
-Nina Dinka Ranns (Chair)
-Corentin Jabot (Scribe)
-Vlad Serebrennikov
-Aaron Ballman 
-Joshua Cranmer 
-Ville Voutilainen 
-Michael Wong 
-Hubert Tong 
-Alisdair Meredith 
+- Nina Dinka Ranns (Chair)
+- Corentin Jabot (Scribe)
+- Vlad Serebrennikov
+- Aaron Ballman 
+- Joshua Cranmer 
+- Ville Voutilainen 
+- Michael Wong 
+- Hubert Tong 
+- Alisdair Meredith 
 
 ## Meeting summary
 P2865 - making array comparison array ill-formed
