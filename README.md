@@ -23,6 +23,133 @@ Feel free to contact us when necessary.
 This document contains summaries of SG22 meetings held during 2024.
 
 - [February 1st, 2024](#February-1st-2024) - Provenance and Memory Model Discussion
+- [July 26th, 2024](#July-26th-2024) - P2865 and P2866
+
+# July 26th, 2024
+
+- Topic: P2865 and P2866
+- Start: 17:05 UTC
+- End: 18:11 UTC
+
+## Agenda
+- [P2865 Remove Deprecated Array Comparisons from C++26 ](https://github.com/cplusplus/papers/issues/1555)
+- [P2866 Remove Deprecated Volatile Features From C++26](https://github.com/cplusplus/papers/issues/1556)
+
+## Attendees
+Nina Dinka Ranns (Chair)
+Corentin Jabot (Scribe)
+Vlad Serebrennikov
+Aaron Ballman 
+Joshua Cranmer 
+Ville Voutilainen 
+Michael Wong 
+Hubert Tong 
+Alisdair Meredith 
+
+## Meeting summary
+P2865 - making array comparison array ill-formed
+
+Aaron: Not deprecated in C, don't know if C would want to do this. C usually doesn't like special cases. No compatibility concern but implementation will have to support that anyway
+
+Ville: There are work around possibles - so a subset of compatible code remains. Will lead to clearer code in C++
+
+Aaron: Agree with ville. because it appears in expressions, it appear less in headers
+
+Ville: C++ will be stricter, it's not a new problem. The sky has never fallen
+
+Nina: Does anyone want to bring that to C? Would anyone in WG14 object
+
+Aaron: I am not aware of anyone objecting - not time to write a paper but happy to present one
+
+Ville: the paper has no deployment experience.WG14 would probably appreciate having that experience and data on code in the wild.
+
+Alisdair: I am not qualified to bring it to WG14
+
+Nina: We will put that on the list of things WG14 might want to see, with an encouragement to provide implementation experience
+
+[The room silently agrees that they do not have compatibility concerns with P2865]
+
+
+—
+
+P2866
+
+[Alisdair presenting]
+
+Hubert: You said this is deprecated in C but i could not find wording for that
+
+Alisdair: I might have been misled
+
+Aaron: WG14 considered N3743 - the goal was to align with C++ - and we rejected it. No C compiler diagnoses these, which WG14 took as a signal that this was not an issue. As an implementer i don't see a motivation for removal as we will have to support it forever. 
+WG14 thinks the volatile semantics is fine here
+But I don't have compatibility concerns.
+
+Ville: same comment as for P2865 - not real compatibility concerns, there are work around.
+
+Aaron: Nobody's C front end diagnose misuse
+
+Ville: Well, it's not really possible to diagnose misuses, deprecation warnings don't have that problem. The lack of warning therefore is not really an indication of appetite or lack thereof.
+
+
+[Moving on to volatile parameters]
+
+Hubert:This paper claim volatile on parameters is meaningless because the compiler can see the whole lifetime, but there are valid use cases (signal handling, longjmp)
+
+A claim was made that volatile on parameters leaks implementation details, but signature don't have to match (even if the microsoft abi does not respect that).
+I have use cases that cannot be worked around.
+
+Ville: correct, some functionality cannot be expressed differently.
+Generally, WG21 is trying to move away from volatile types. We just want volatile accesses and we want to do that.
+This is why we probably would not want to undeprecate volatile parameters.
+
+Hubert: The 2 prior uses cases for volatile parameter cases
+setjmp/longjmp - if you don't use volatile, jumping back in a function, would not reliable observe the value
+to reliably observe the change of a value in a signal handler
+
+Aaron: another use case is volatile sigatomic_t
+
+
+Nina
+Will go back to EWG
+If we remove volatile parameter, or undeprecate them, does it affect how we feel about compatibility
+
+Ville: Deprecating would increase compatibility - but C++ compilers can decide volatile parameters don't do anything because people rely on a behavior that is unspecified. This is implementation ascribing their own behavior. No appetite to keep supporting these use cases at the cost of keep being on the path of getting rid of volatile qualified types
+
+Hubert: But it is in the C standard, so this is why compilers provide this behavior. This change might break C headers as implementations might volatile qualify sigatomic_t.
+
+Ville: The compatibility problem always existed, specification-wise. 
+I have always found it unwise to rely on that unspecified behavior. These use cases were never the original intent of volatile.
+
+
+Nina: do we need to bring any compatibility concerns to EWG
+
+Ville:  Yes because of what hubert mentioned - for both parameters and return types
+
+Hubert: Agree
+
+Alisdair: If EWG rejects Hubert, and keeps with removal, are we expressing objection?
+
+ Ville: If we don't do that removal, it doesn't hurt anyone and we could consider doing it later. Removing this clause C.7.6 part from this paper and keeping it deprecated doesn't hurt
+
+Nina: No objection to striking that clause
+
+[Room nodes]
+
+[Alisdair requests help to explain the issue]
+
+[No taker]
+
+Nina:
+It would be better to bring a more complete analysis of this issue.
+
+Nina:
+
+## Polls
+
+- Sg22 recommend undoing removal of volatile qualified parameters and return types
+
+SF: 4 | F: 2 N 2 | A: 0 | SA: 0
+
 
 
 # February 1st, 2024
