@@ -24,6 +24,104 @@ This document contains summaries of SG22 meetings held during 2024.
 
 - [February 1st, 2024](#February-1st-2024) - Provenance and Memory Model Discussion
 - [July 26th, 2024](#July-26th-2024) - P2865 and P2866
+- [August 28th, 2024](#August-28th-2024) - P3309 and P3140
+
+# August 28th, 2024  
+- Topic: P3309 and P3140
+- Start: 03:02 UTC
+- End: 03:43 UTC
+
+## Agenda
+- [P3309 R1 constexpr atomic and atomic_ref](https://github.com/cplusplus/papers/issues/1960)
+- [P3140 std::int_least128_t](https://github.com/cplusplus/papers/issues/1793)
+
+## Attendees
+- Nina Dinka Ranns - Chair
+- Davis Herring
+- Corentin Jabot 
+- Joshua Cranmer
+- Jens Gustedt 
+- Vlad Serebrennikov
+- Davis Herring
+- Jan Schultke
+- Hana Dusíková
+- JeanHeyd Meneide - Scribe
+- Jens Maurer
+- Davis Herring
+- Walter E Brown
+
+## Meeting Summary
+
+P3309r1: constexpr atomic<T> atomic_ref<T>
+Hana Dusíkova
+------------
+
+Hana: (* starts off by explaining the paper and its purpose and its implementation *)
+
+Nina: Jens?
+
+JensG: Yeah this does not collide with anything in C because we don't even have constexpr for functions in C. Just one semantic question: we have atomic_wait and we are marking this constexpr, do we know why we need to mark this constexpr specifically?
+
+Hana: It just doesn't do anything, its treated as a wait in a single-threaded program (* Hana browses to the literal patch in llvm-project/libcxx to show it)
+
+JensG: Ah so just an atomic wait in a single-threaded program just... does nothing?
+
+Hana: (* finds the implementation of `wait` in `atomic<T>` in her branch *) yes, so, we just do a load check, and if it doesn't give us the right value, we do a `__builtin_trap()` which, in this case, just stops compilation with an error.
+
+JensG: Okay, okay, yeah that's fine.
+
+Nina: Any other comments? Any other questions? Any concerns about the compatibility ?
+
+(* room goes silent, someone chimes in with "No" *)
+
+Nina: Okay, perfect.
+
+
+
+P3140r0: std::int_least_128t
+Jan Schultke
+--------------------
+
+Jan: (* presenting *) yeah the reason for this paper is just to add 128 bit integers to C++. We can see around 145K usages of some form fo int128/int_128 as a type, which is the same order of magnitude of long double. EWG and specifically Bjarne said they need 128 bit integers. The way we were going about this is just doing a hack it into the library through <cstdint>. C23 made some changes which eliminated the intmax_t problems. My only concern is how this will end up looking for C: is there any compatibility concerns if we add std::int_least128_t but no int_least_128_t.
+
+Nina: JeanHeyd?
+
+JeanHeyd: Yeah Jens Gustedt already fixed up the ABI problem as you mentioned. We have support for "%w128d" printf modifier already in C, so that solves that problem.
+
+Nina: Okay. Jens?
+
+Jens: So there's one thing we need to worry about and its really alignment between the two languages (* SCRIBE'S NOTE: literally like `alignof(std::int_least128_t)` *). This also might pose a problem in freestanding for both C and C++, as the hardware support just might not be there for this.
+
+Jan: Yeah, I received a lot of feedback about this and so ultimately we took it from being required everywhere to only being required for hosted implementations.
+
+Vlad: What does this mean for the .h headers? I think we own the <cwhatever> headers and can make changes to them, what about the <stdwhatever.h> headers?
+
+JensM: So this is actually correct except for the portion that the ".h" headers are ALSO C++ headers. The implementation details and similar were sorted out a while ago. (* SCRIBE'S NOTE: this is a reference to a meeting around LEWG about updating C++ to handle C changes in the library, and where headers are sourced from in C++ implementation and what it meant. *) Modifying those headers (the ".h" headers) is fine.
+
+Jan: Okay, good, because that was my understanding.
+
+Vlad: You should also update section 4.1.3 because it's not fully in sync?
+
+Jan: This is moreso a suggestion about C, not what the changes are to be made by the C++ version of the proposal.
+
+Jens: If you want to keep this advice up to date, there's other places you need to suggest to make changes such as <stdckdint.h>. We should also see a proposal of this at some point in WG14, but there is no blockers for C++ to move forward on this.
+
+Jan: Yeah, we also need to do <stdbit.h>
+
+Nina: Corentin?
+
+Corentin: A clarifying question, especially for C. Are you saying we want this to be added in a different way to handle this in ADDITION to having _BitInt(...), for C?
+
+JensG: Yes, it is okay to have this support.
+
+JeanHeyd: (* ridiculously long explanation of implementations which support _BitInt at the lowest allowed value (BITINTMAX == 64) but still also have extended integer types like int128, since some implementations have expressed annoyance at implementing algorithms to handle not just the powers of 2, but EVERY bit size between 1 and BITINTMAX *)
+
+Nina: Okay... any other comments? Any concerns over compatibility ?
+
+(* long, slow silence *)
+
+Nina: Alright, then I think that means we're done!
+
 
 # July 26th, 2024
 
