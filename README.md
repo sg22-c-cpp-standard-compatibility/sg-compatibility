@@ -25,6 +25,105 @@ This document contains summaries of SG22 meetings held during 2024.
 - [February 1st, 2024](#February-1st-2024) - Provenance and Memory Model Discussion
 - [July 26th, 2024](#July-26th-2024) - P2865 and P2866
 - [August 28th, 2024](#August-28th-2024) - P3309 and P3140
+- [January 7th, 2025](#January-7th-2025) - P3477R0, P3475R0, and P3384R0
+
+# January 7th, 2025
+## Agenda
+- [P3477R0 There are exactly 8 bits in a byte (JF Bastien)](https://github.com/cplusplus/papers/issues/2131)
+- [P3475R0 Defang and deprecate memory_order::consume  (Hans Boehm)](https://github.com/cplusplus/papers/issues/2129)
+- [P3384R0 COUNTER (Jeremy Rifkin)](https://github.com/cplusplus/papers/issues/2041)
+
+## Attendees
+- Nina Dinka Ranns - Chair
+- Joshua Cranmer 
+- Jens Gustedt - Scribe
+- Rajan Bhakta (IBM)
+- Jeremy Rifkin
+- Hans Boehm
+- Paul E. McKenney
+- Ville Voutilainen 
+- Jens Maurer
+- Robert Seacord
+
+## Meeting Summary
+
+P3475R0 Defang and deprecate memory_order::consume 
+Hans Boehm presents.
+--------------------
+
+defang ~ make it less dangerous
+consume was introduced C++11/C11 but was never really implemented
+The reason was to make it easier to write lock-free code, e.g RCU idiom. But technically the consume model was never necessary because architectures do the update of dependent data.
+In the field the model was never completely implemented.
+It was already proposed to be deprecated in C++17, but then the attempt failed. But since not much has happened on the implementation side, Hans reproposes again.
+On the other hand the memory model needs reform and consume complicates the arguments.
+Even on ARM processors the difference is not relevant any more.
+The paper simplifies the C++ text quite noticeably.
+Existing code should be preserved.
+
+Rajan: I talked to our teams and IBM is good with it.
+
+Jens G.: all for it for the C memory model
+
+Paul: linux kernel has something similar to kill_dependency but do not use the C feature
+
+Proposal to push it also to WG14
+
+Consensus to proceed.
+
+P3477R0 There are exactly 8 bits in a byte
+Robert Seacord presents.
+--------------------
+
+No one has answered this in interview questions correctly.
+There is some hardware that has more than 8 bits in a byte.
+There is a clear argument to restrict this value for C++, but for C the argument is a less weaker because there are more compilers around
+
+Ville: there are DSP by TI with 24 bit processors, but there is no plan to do more than C++11 on that platform. He has no idea if their C compiler is modernized to be relevant.
+
+Jens M.: possible avenue would be that C++ goes ahead
+
+Joshua: some people come from time to time to propose more than 8 bits in clang
+
+Jeremy: would it still be possible to have C++ compilers with more bits? 
+
+Ville: probably … you would have to emulate that
+
+Jens G.: recently we had problems in C for the bit-op functions, so doing something similar would really help
+
+Jens M.: gcc still has the flag, so you could implement it relatively easily, but that is really unlikely that someone would really do that for C++, in the past 10 year nobody cared
+
+Ville: DSP do parallel processing and you wouldn't do text processing, it is really special hardware
+
+Jens G.: in C, resticting to 8 bit for hosted environments would probably the most convenient to do, freestanding could have a bit more possibilities
+
+Consensus to proceed
+
+p3384 __COUNTER__
+Jeremy Rifkin presents:
+--------------------
+
+It is used quite a lot of places, mostly for unique identifiers.
+There are alternatives in C++ with templates, but not in C.
+Not propagated across module boundaries.
+Question is about how often this would evaluate? In C++ all compilers agree, in C there is some deviation.
+Counter range? The type would jump at boundaries of the signed types.
+
+Jens G: - decimal literals should be defined different - use perhaps INT_MAX as a minimal guarantee
+
+Jens M.: when it overflows the maximal value, the program is illformed, so compilation is usually aborted
+
+Robert: has questions about using unsigned
+
+Ville: there will be antibodies activated in the C++ community, so maybe it is better if this goes into C first
+
+Jens G.: would they prefer to have in C first, so they don't have to worry about it?
+
+Jens M.: It is already there in the field for C++. But we would need to have the specification to match reality.
+
+Ville: Suggests to primarily go through WG14.
+
+Consensus to proceed.
 
 # August 28th, 2024  
 - Topic: P3309 and P3140
