@@ -79,7 +79,7 @@ No one has answered this in interview questions correctly.
 There is some hardware that has more than 8 bits in a byte.
 There is a clear argument to restrict this value for C++, but for C the argument is a less weaker because there are more compilers around
 
-Ville: there are DSP by TI with 24 bit processors, but there is no plan to do more than C++11 on that platform. He has no idea if their C compiler is modernized to be relevant.
+Ville: there are DSP by TI with 24 bit processors, but there is no plan to do more than C++03 on that platform. He has no idea if their C compiler is modernized to be relevant.
 
 Jens M.: possible avenue would be that C++ goes ahead
 
