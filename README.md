@@ -8,6 +8,7 @@ Go through the [issues list here](https://github.com/sg22-c-cpp-standard-compati
 # Chairs
 
 - Nina Dinka Ranns (primarily Working Group 21 - C++)
+- Davis Herring (primarily Working Group 21 - C++, co-chair)
 - [JeanHeyd Meneide (primarily Working Group 14 - C)](mailto:wg14@soasis.org)
 
 Feel free to contact us when necessary.
@@ -22,10 +23,251 @@ Feel free to contact us when necessary.
 
 This document contains summaries of SG22 meetings held during 2024.
 
-- [February 1st, 2024](#February-1st-2024) - Provenance and Memory Model Discussion
-- [July 26th, 2024](#July-26th-2024) - P2865 and P2866
-- [August 28th, 2024](#August-28th-2024) - P3309 and P3140
+- [January 31st, 2025](#January-31st-2025) - P2746, P2142, and P3248
 - [January 7th, 2025](#January-7th-2025) - P3477R0, P3475R0, and P3384R0
+- [August 28th, 2024](#August-28th-2024) - P3309 and P3140
+- [July 26th, 2024](#July-26th-2024) - P2865 and P2866
+- [February 1st, 2024](#February-1st-2024) - Provenance and Memory Model Discussion
+
+# January 31st, 2025
+## Agenda
+
+- [P2746 Deprecate and Replace Fenv Rounding Modes (Hans Boehm)](https://github.com/cplusplus/papers/issues/1437)
+- [P3248 Require [u]intptr_t (Gonzalo Brito Gadeschi)](https://github.com/cplusplus/papers/issues/1909)
+- [P2142 Allow '.' operator to work on pointers (Jim Buckeyne)](https://github.com/cplusplus/papers/issues/868)
+
+## Attendees
+NR      Nina Ranns (chair)
+
+DH      Davis Herring (co-chair, scribe)
+
+HB      Hans Boehm
+
+JG      Jens Gustedt
+
+JC      Joshua Cranmer
+
+CJ      Corentin Jabot
+
+AB      Aaron Ballman
+
+JB      Jim Buckeyne
+
+RB      Rajan Bhakta
+
+KE      Khalil Estell
+
+GB      Gonzalo Brito
+
+VV      Ville Voutilainen
+
+SV      Steven Vormwald
+
+LV      Lauri Vasama
+
+LY      Li Yihe
+
+AM      Alisdair Meredith
+
+PM      Paul McKenney
+
+JM      Jens Maurer
+
+PP      Paul Preney
+
+JS      Jan Schultke
+
+NL      Nevin Liber
+
+## Meeting Summary
+
+
+### P2746 Deprecate and Replace Fenv Rounding Modes
+
+
+(HB presents slides for P2746.)
+
+HB: Most people don't know `#pragma STDC FENV_ACCESS` is even a feature, and it's not been well supported in C++.
+
+HB: SG6 tried to find use cases and found 3, none of which seems compelling:
+
+HB: Interval arithmetic might be better implemented in assembly anyway.
+
+HB: WG14 mentioned using rounding modes for fuzz testing, but it's heuristic at best.
+
+HB: `rint` having the rounding mode as an implicit argument is a misfeature.
+
+HB: IEEE is moving in the direction of static rounding modes, but that may not be enough.
+
+HB: I don't agree with IEEE/WG14 that rounding modes should be bound to a scope or time interval at all, since computing an upper bound is not the same as rounding every subexpression upward.
+
+JG: (about a slide) There was no C20; before C23 is C17.
+
+HB: A member function tells whether results are correctly rounded.
+
+DH: The ODR might not account for different rounding in different TUs.
+
+HB: Guy Davidson wants reproducible operators, which could be a wrapper for the correctly-rounded non-operator operations.
+
+HB: I consider `#pragma STDC FENV_ROUND`'s block-based nature a disadvantage.
+
+RB: We did consider `constexpr` interactions in C in adding `FENV_ROUND`.
+
+HB: It seems that language divergence here has been deemed acceptable.
+
+RB: Changing constexpr rounding would happen only on new C23 request.
+
+HB: We can look at the library proposal, but that's probably less interesting here.
+
+NR: I'd like to hear what WG14 thinks will happen if C++ deprecates these functions.
+
+JG: I'm not opposed to removing the dynamic environment support.  I don't like encapsulating the rounding mode into a type, since we don't want many such types in C and selecting among them requires expertise.
+
+HB: Maybe I should show the proposed interface.
+
+(HB presents P2746 itself.)
+
+HB: This proposal is C++-centric: it doesn't introduce new floating-point types that have a rounding mode, just introduce a class type that holds one and uses it for each operation.  The syntactic convenience works well in C++, but is not C-friendly.
+
+HB: (in response to a scribing clarification) Davis was actually the one who suggested this interface.
+
+JC: I'm working on floating-point semantics in C++; the dynamic environment in general is a problem for both languages.  The interaction with compile-time features for rounding like template parameters is complicated.
+
+HB: Matthias has brought this up repeatedly, but it's very hard to specify what implementations actually do here.  Floating-point exceptions are an interesting problem, but SG6 decided to defer them.  Flush-to-zero is hard to specify.
+
+JM: Why do we believe the static `#pragma` is bad (other than syntactically)?  It seems implementable.
+
+JC: Inline functions would want to inherit the `#pragma` but can't (you can't have it as a template argument).
+
+JS: Even in C you could call a real function.
+
+JC: Which is the common case in C++.
+
+RB: User-defined functions don't use the ambient static rounding mode.
+
+HB: The C23 rules do affect the standard functions.
+
+RB: Because they are the IEEE functions.
+
+HB: I prefer the per-operation specification because except in special cases you need to consider each operation separately.
+
+JS: Is there an example where you want it per-operation, not per type?
+
+HB: Use cases are rare, but you can't implement interval arithmetic with a fixed rounding mode.
+
+NR: Going back to WG14/WG21 compatibility, do I understand correctly that we already have an incompatibility with C23 that we can't remove?
+
+RB: C++ doesn't specify it, but it could.
+
+DH: Would the effects on the standard library functions of the C23 feature be implementable/desirable in C++?
+
+RB: I think it's desirable, given the IEEE correspondence.
+
+JG: How widely implemented are the C pragmas?
+
+RB: C99 pragmas are often accepted and ignored.
+
+JC: Clang implements them; NVCC doesn't support `FENV_ACCESS`, but a similar per-function feature; GCC has only command-line flags.
+
+RB: They all do have flags.
+
+JC: C23 pragmas are partially implemented in Clang, without the library-function support.
+
+HB: So constant evaluation follows the rounding mode.
+
+JC: Yes.
+
+NR: I don't think we can do any polls here; this needs to be seen by SG6 again at least.
+
+HB: This has been approved by SG6, but I'd like them to see it again.
+
+NR: Davis, are you considering writing a WG21 paper on the C23 feature?
+
+DH: No; I was trying to understand how durable the existing incompatibility is.
+
+
+### P3248 Require [u]intptr_t
+
+(GB presents slides for P3248R2.)
+
+GB: I'm asking WG14 whether there is some other impact we didn't consider.
+
+DH: It's true that "pointer value" and "address" are different, but `uintptr_t` still can't hold a pointer value; it might be a third thing, but the platforms with such a third thing (like CHERI) aren't conforming anyway, so it might not matter.
+
+GB: The intent is just that it have C's semantics.
+
+JG: I proposed this for C23, but it wasn't adopted.  I see in `<cstdint>` that C++ isn't based on C23 which bases everything on widths.
+
+NR: That's in progress.
+
+JM: There's a paper, but I don't know whether it addresses that particular point.  This paper is like how C++ adopted 2's complement (even though C followed that decision later).
+
+JS: Aren't there `printf` macros too?
+
+GB: I think so; I'll double-check whether those are included automatically.
+
+NR: I hear (absent objection) that we don't have major concerns here, and that WG14 can pick this up later.
+
+### P2142 Allow '.' operator to work on pointers
+
+(JB presents P2142R1.)
+
+JB: My paper based on C++17.
+
+JB: Beginning programmers at my most recent company still had trouble recognizing the need for `->`.
+
+VV: We can't make this change for smart pointers.
+
+JB: It's not an error to use `.` with them.
+
+VV: But it's not the same as `->` there, and we don't want to mix their meanings.  Who would actually be helped when avoiding raw pointers?  The improvement is too late.
+
+JM: It's a fundamental difference (Java notwithstanding) and a non-starter.  Maybe WG14 wants the idea, but why discuss this in SG22?
+
+PM: The Linux kernel developers actively don't want this; `->` heralds a potential cache miss and allowing `.` hides errors.  The requirements for C are not the same as high(er)-level language. 
+We'd have to wait years to use it anyway.  The beginning-programmer mindset described is incompatible with producing quality kernel code.
+
+JB: I had an algorithm in C and could change it into Javascript just by replacing `->` with `.` and `int` with `var`.  It would be nice to go backwards.
+
+PM: The forward direction is a trivial change.
+
+JB: Yes, a pointer can have an additional expense.
+
+JB: I'll drop the paper; WG14 was interested if WG21 was.
+
+NR: We have people from WG14...
+
+JG: We would never add something without existing compiler support, and their customers haven't demanded this.  The beginner problem is not the syntax, but the abstract notion of a pointer.
+
+NR: This probably can't proceed in WG21, but are there more comments from WG14?
+
+PP: `->` is used in C++ for many things beyond pointer indirection.
+
+JS: If we could have `operator.`, this might make sense.
+
+VV: It's attractive, but we'd need a time machine (or a third syntax that wouldn't match Java/Javscript).  We also can break programs by making existing syntax no longer ill-formed.
+
+AB: I agree with Ville, but to extend what Paul McKenney said: we could downgrade the error to a warning, but users appreciate the feedback.
+
+NR: We don't approve papers, but EWG (which does) is unlikely to approve this.
+
+JB: In C, a generic operator allows more generic usage.
+
+AB: WG14 tends to be very conservative with field experience (as Jens Gustedt said).  I don't know what the Clang community with an RFC on this subject, but there would probably be pushback even just for C (partly because of things like Objective C).
+
+VV: Most users wouldn't dare to request language extensions, and compiler authors aren't keen on extensions in fundamental areas, so it would be hard to get implementation experience here.  There's a chicken-and-egg problem between the committees and the compiler implementers.  We don't have good information about what users want (but perhaps it's a good thing that compilers don't implement just any idea).
+
+JB: Open Watcom supports DOS with weird pointer sizes.  The patch would be minor.
+
+NR: We're running out of time.  Jim, do you have any questions?
+
+JB: No; thanks for the conversation.
+
+JS: Is SG22 meeting in Hagenberg?
+
+NR: We don't meet in person because we wouldn't have WG14.
+
+NR: I'll schedule another teleconference once we have papers identified.
 
 # January 7th, 2025
 ## Agenda
@@ -48,6 +290,7 @@ This document contains summaries of SG22 meetings held during 2024.
 ## Meeting Summary
 
 P3475R0 Defang and deprecate memory_order::consume 
+
 Hans Boehm presents.
 --------------------
 
@@ -72,8 +315,8 @@ Proposal to push it also to WG14
 Consensus to proceed.
 
 P3477R0 There are exactly 8 bits in a byte
-Robert Seacord presents.
 --------------------
+Robert Seacord presents.
 
 No one has answered this in interview questions correctly.
 There is some hardware that has more than 8 bits in a byte.
@@ -100,8 +343,9 @@ Jens G.: in C, resticting to 8 bit for hosted environments would probably the mo
 Consensus to proceed
 
 p3384 __COUNTER__
-Jeremy Rifkin presents:
 --------------------
+Jeremy Rifkin presents:
+
 
 It is used quite a lot of places, mostly for unique identifiers.
 There are alternatives in C++ with templates, but not in C.
