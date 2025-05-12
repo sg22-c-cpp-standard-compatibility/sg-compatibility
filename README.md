@@ -23,11 +23,149 @@ Feel free to contact us when necessary.
 
 This document contains summaries of SG22 meetings held during 2024.
 
+- [May 5th, 2025](#January-31st-2025) - CWG3017 and P3412R1
 - [January 31st, 2025](#January-31st-2025) - P2746, P2142, and P3248
 - [January 7th, 2025](#January-7th-2025) - P3477R0, P3475R0, and P3384R0
 - [August 28th, 2024](#August-28th-2024) - P3309 and P3140
 - [July 26th, 2024](#July-26th-2024) - P2865 and P2866
 - [February 1st, 2024](#February-1st-2024) - Provenance and Memory Model Discussion
+
+
+# May 5th, 2025
+## Agenda
+
+- [CWG3017 Commas in controlling expression of conditional inclusion](https://github.com/cplusplus/papers/issues/2294)
+- [P3412 R1 String interpolation](https://github.com/cplusplus/papers/issues/2083)
+
+## Attendees
+- Bengt Gustafsson (BG) (Paper Author/Presenter, P3412) 
+- Jens Maurer (JM) (Core Issue Presenter, CWG3017)
+- Nina Dinka Ranns (NDR)
+- JeanHeyd Meneide (JHM) (Scribe)
+- Jens Gustedt (JG)
+- Rajan Bhakta (RG)
+- Aaron Ballman (AB)
+- Alex Celeste (AC)
+- Davis Herring (DH)
+- Robert Kawulak (RK)
+- Esa Pulkkinen (EP)
+- Corentin Jabot (CJ)
+- Walter E Brown (WB)
+- Maryam Karampour (MK)
+
+## Meeting Summary
+
+### P3412, String Interpolation
+Starting Time: 19:05:11
+
+BG:
+- Presentation given by BG about String Interpolation.
+- Highlights:
+  - Three forms of literals: `p"..."` (WG14, `printf`-based), `x"..."` (WG21-ish based, does not wrap in `__FORMAT__` macro), `f"..."` (WG21-ish based, wraps format macro)
+  - Prepreocessor is responsible for chunking string into pieces for string interpolation to work (this is primary reason why WG14 is being talked to about this)
+  - String pieces are then passed to `std::format` (or, rather, passed to `__FORMAT__` macro)
+  - Any expression is okay so long as it appears between `{}` in the string literal. The string literal begins with `f`.
+  - E.g.: `f"Value: {x + 3:>5}` BECOMES `__FORMAT__("Value: {:>5}", (x+3))`
+  - ESCAPE: `x"..."` is ALSO a format string that does not wrap the thing in `__FORMAT__`.
+  - ESCAPE MOTIVATION: `std::print(f"Value: {x + 3}")` -- BAD, will result in printing of a call to macro `__FORMAT__` that looks like `std::print(__FORMAT__("Value: {:>5}", (x+3)))`
+- FOR WG14: `p"..."` which inserts "properly" motivated format specifiers
+  - PROBLEM: `PRIdMAX` and friends cannot be used in this since parsing happens BEFORE prepreocessor (to allow use of macros in these things, such as `errno`)
+  - Other issues because of type safety and other shenanigans due to parsing (also: how is the preprocessor supposed to know about types? very thorny!) Some proposed solutions such as `v"..."` which uses a new printf argument type called `%v` that figures out the argument type at run-time. This implies overhead and a lot of machinery in C, but that's a problem for C as BG points out!
+  - Reasonably complete implementation in Clang, also on Godbolt - under x86_64 clang "P3412 String interpolation".
+
+JG: So, is this a clash and a problem with adding new prefixes in front of strong literals?
+
+BG: Yes, as mentioned in the paper having a new string prefix `f` means that what was previously a macro `f` in front of an ordinary string literal will 
+
+JM: Just for clarity, the "f" strings will change lexing (before the Preprocessor), and so if `f` is observed as a macro in one place and then might no longer be observed as a macro. We did not have a great time of this about `u` in C, as there were some complaints. We do not have a good grip on how widespread that concern was, however.
+
+BG: I can comment a bit about that: in SG16 we had a presentation there and we talked about it, they asked for wording but I have not finished wording fully.
+
+AB: So... there's no I/O functions in freestanding; how would we use these `f""` strings in a freestanding implementation?
+
+BG: So, yes, there's allocating and non-freestanding functions that can handle this, but for `f"..."` in particular you hook into the `__FORMAT__` expansion of it to do proper uses. For `x"...."`, give it's just a (potentially comma-delimited) string literal with zero or more expressions, you would just stick it in a proper function for that.
+
+AB: So to clarify, if you happen to have I/O functions you can use them for a Hosted or a freestanding that has them, but otherwise you should hook the `__FORMAT__` macro to provide what you need for your platform.
+
+BG: Right.
+
+CJ: So the first problem is that this needs so many prefixes for the different places. Needing one for format and another for print is problematic and probably a bit error prone, so that should be looked at. The second problem is that this produces a very specific formatting of the string which might be a bit of a problem.
+
+AB: So am I correct in understanding that this will have a runtime vs. compile-time issue, where periods and potential floating point stuff might change...?
+
+BG: No, this is different because it always forwards to a runtime call (Scribe Note: typical forwarded to `printf` or `std::format` or whatever).
+
+CJ: The parsing here happens in the preprocessor so it doesn't even matter. Everything has to happen in the preprocessor since you are allowed to have macros as per what the examples show, and I'm trying to figure out the... usability of macros in this.
+
+BG: It's for both a teachability and a usability, for me particularly ease of use and reducing cognitive load, and it's also easier to implement here.
+
+JG: So to come back to lexing, this is going to have to come back to string concatenation for me because the reason you need them is because of these `PRI...` macros. Because of the way we are talking about this means we lose a lot of those macros and if we find a way to shift it over we are going to be in a bit of a trouble here and it would be nice if we could reuse them. Could we maybe do it in some different phase, like "`7'`" (Scribe Note: said "Seven Prime").
+
+BG: Yeah I don't think it works out because doing it so late, because then you'd have to have problems with other macros since you already expanded macros (to do the concatenation for e.g. the `PRI...` macros).
+
+JG: No no, it's fine, because then the Printing macros would work out even if you are doing it at that late stage because string concatenation still works.
+
+BG: Right, it works for *those* macros but it fails for e.g. `errno` as a macro because that isn't about string concatenation.
+
+AB: Can I make a wide character version of these:
+
+BG: Yes, you can do `fL` and such.
+
+AB: And can I do it in any order?
+
+BG: Tentatively, I said that the encoding prefix comes first, then `f` if it's there, and then any `R` for a raw string literal. This is just how it works.
+
+CJ: I think String Concatenation is more important than Macro Expansion (e.g. `errno`). I think if we have to choose we should try String Concatenation.
+
+BG: I would hope there was some way to work around it or put it together that I have to figure out...
+
+JM: I think if `errno` stops working then this is just unteachable. Like it just doesn't work out well because `errno` looks like a normal variable to most users (until it isn't). 
+I think it would be possible with perhaps some of re-tokenization of string after string concatenation. I am... not looking forward to the specification changes to make that sort of thing happen but it would be doable and workable.
+
+BG: One of the issues so far is `f"..." f"..."` with is for interpolation string concatenation.
+
+NDR: Are there any specific compatibility concerns?
+
+BG: It was specifically about `p` or `f`.
+
+JHM: I think you should just focus on `f"..."` by itself and not try to do too much work for C or its derivatives to get a bunch of different print syntaxes. I think the `__FORMAT__` hook is good enough and we should figure out a type-agnostic `print` facility for C.
+
+BG: I was not going to propose `p` or something specific about C, I just wanted to show that there were workable solutions.
+
+AB: I don't think there's no serious compatibility concern, for example C++ has raw string literals while C has it. I don't see this as a sincere compatibility concern because we have the difference in raw string literals and everything is fine so while it's interesting from a C Committee perspective it's more and fine.
+
+NDR: Alright, well that wraps that up.
+
+Ending Time: 19:45:31
+
+### CWG 3017
+Jens Maurer presenting
+Starting Time: 19:46:36
+
+- We have a problem with comma expressions and other (weird) expressions in "constant-expression" (the grammar term) that is used for the preprocessor. We figured that comma expressions should not be included here because there is no good point for it, perhaps? Wanted to synchronize with C. In May, found the wording in C23:
+
+- > Constant expressions shall not contain assignment, increment, decrement, function-call, or comma operators, except when they are contained within a subexpression that is not evaluated.
+
+- Thus, the C behavior is conforming and that sort of answers the question we were asking in the first place.
+
+NDR: ... Well, I', kind of glad that works out for us if we already have a proper answer, then!
+
+JHM: I think it's probably good if we spend a lot of time refining what is part of a constant expression for the preprocessor. We actually just had a proposal come to C for the purposes of solving that specific problem that was recently integrated into C2y concerning additional constant expressions. I think in general we should be trying to refine what that is and shrinking it down.
+
+AB: I did a bit of digging and this new constraint about comma expression and it turns out that's been present since around C89. So this is a concern we've had since 1970.
+
+CJ: Do we actually have a pragmatic use case for `,` in a conditional inclusion expression? Secondly, we really should not rely on the grammar of C (or C++) to choose what goes for a (preprocessor) constant expression. It allows a lot but it's not super useful, and so maybe we should constrain things more strongly.
+
+AC: We might want to handle this sooner rather than later because we're going to see a proposal for `static_assert(...)` as an expression.
+
+JM: So we don't want to handle `static_assert` at the preprocessor level but it can't 
+
+AB: Recently the C Committee is seeing a lot of movement around what do we consider a constant expression (Scribe Note: meant Corentin, not JeanHeyd) and it would be better if we maybe considered more work in factoring out what is considered a preprocessor conditional expression.
+
+DH: I just want to point out that today on the reflector (SG22 mailing list) that it could be a be a bit easier to just allow them and have it be as part of `void`, like  "`void(1), 1`" be a constant expression.
+
+NDR: Speaking of the `static_assert` as expressions, we are going to have it on the docket soon.
+
 
 # January 31st, 2025
 ## Agenda
