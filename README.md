@@ -24,7 +24,7 @@ Feel free to contact us when necessary.
 This document contains summaries of SG22 meetings held during 2024.
 
 - [May 5th, 2025](#January-31st-2025) - CWG3017 and P3412R1
-- [January 31st, 2025](#January-31st-2025) - P2746, P2142, and P3248
+- [January 30th, 2025](#January-30th-2025) - P2746, P2142, and P3248
 - [January 7th, 2025](#January-7th-2025) - P3477R0, P3475R0, and P3384R0
 - [August 28th, 2024](#August-28th-2024) - P3309 and P3140
 - [July 26th, 2024](#July-26th-2024) - P2865 and P2866
@@ -167,7 +167,7 @@ DH: I just want to point out that today on the reflector (SG22 mailing list) tha
 NDR: Speaking of the `static_assert` as expressions, we are going to have it on the docket soon.
 
 
-# January 31st, 2025
+# January 30th, 2025
 ## Agenda
 
 - [P2746 Deprecate and Replace Fenv Rounding Modes (Hans Boehm)](https://github.com/cplusplus/papers/issues/1437)
