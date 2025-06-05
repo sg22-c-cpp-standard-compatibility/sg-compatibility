@@ -23,16 +23,19 @@ Feel free to contact us when necessary.
 
 This document contains summaries of SG22 meetings held during 2024.
 
-- [Jun 4th, 2025](#une-4th-2025) - CWG3017 and P3412R1
+- [Jun 4th, 2025](#june-4th-2025) - CWG3017 and P3412R1
 - [May 5th, 2025](#May-5th-2025) - CWG3017 and P3412R1
 - [January 30th, 2025](#January-30th-2025) - P2746, P2142, and P3248
-- [January 7th, 2025](#January-7th-2025) - P3477R0, P3475R0, and P3384R0
+- [January 7th, 2025](#January-7th-2025) - P3477R0, P3475R0, and P3384
 - [August 28th, 2024](#August-28th-2024) - P3309 and P3140
 - [July 26th, 2024](#July-26th-2024) - P2865 and P2866
 - [February 1st, 2024](#February-1st-2024) - Provenance and Memory Model Discussion
 
 # June 4th, 2025
 ## Agenda
+[P3540 R1 #embed Parameter offset](https://github.com/cplusplus/papers/issues/2177)
+[P3568 R1 break label; and continue label](https://github.com/cplusplus/papers/issues/2212)
+[P3639 R0 The _BitInt Debate](https://github.com/cplusplus/papers/issues/2276)
 
 ## Attendees
 
