@@ -34,10 +34,33 @@ This document contains summaries of SG22 meetings held during 2024.
 # June 4th, 2025
 ## Agenda
 [P3540 R1 #embed Parameter offset](https://github.com/cplusplus/papers/issues/2177)
+
 [P3568 R1 break label; and continue label](https://github.com/cplusplus/papers/issues/2212)
+
 [P3639 R0 The _BitInt Debate](https://github.com/cplusplus/papers/issues/2276)
 
 ## Attendees
+
+- Aaron Ballman
+- Jens Gustedt 
+- Omar Sandoval
+- Khalil Estell (scribe)
+- Maryam Karampour
+- Nevin Liber
+- Davis Herring (chair)
+- Jan Schultke
+- Jens Maurer
+- Nina Dinka Ranns
+- Robert C. Seacord
+- Alex Celeste
+- Paul E. McKenney
+- W E Brown
+- Joshua Cranmer 
+- Ville Voutilainen 
+- JeanHeyd Meneide
+- Corentin Jabot 
+- Rajan Bhakta 
+
 
 ## Minutes
 Jan: There has been multiple implementors that state that the labels can be implemented. GCC already supports this. WG14 will figure this out and then we can copy and paste into C++. N3355 syntax is the conclusion. But C++ should try and fix these pre-emptively. The concern is that the label syntax is still extremely limited. Macro expansion could result in label duplication which will fail compilation. This proposal lifts those limitations. The restrictions become apart of break, continue and goto. labels can go anywhere even multiple time and multipl elevels
