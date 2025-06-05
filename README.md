@@ -81,7 +81,7 @@ Davis: You mean having multiple?
 
 CJ: No nested. Adding multiple levels of label adds complexity.
 
-JeanHyde: If you have a nested loop with the same label? In the case of goto to a label, is ambiguous, but with a set of series of nested loops and all nested loops are given the same label, but in your proposal and we jump to the nearest, but we can just require different labels.
+JeanHeyd: If you have a nested loop with the same label? In the case of goto to a label, is ambiguous, but with a set of series of nested loops and all nested loops are given the same label, but in your proposal and we jump to the nearest, but we can just require different labels.
 
 Jan: The way we can resolve the ambiguous is with shadowing. This is permitted by Rust currently. Java and JS doesn't, but Rust has support. Maybe it doesn't have to be ill-formed, it could just be a compiler warning.
 
@@ -127,7 +127,7 @@ Davis: Just to clarify, you do not expect that MSVC will not implement _BitInt?
 
 Jan: I don't know how long it would take for them to add support.
 
-JeanHyde: One of the benefits of the library choice is that you disconnect from compiler implementation. We can implement this outside of vendor support.
+JeanHeyd: One of the benefits of the library choice is that you disconnect from compiler implementation. We can implement this outside of vendor support.
 
 (back to slides)
 
@@ -135,7 +135,7 @@ Jan: If you make it fundamental type, this adds a lot of additional support acro
 
 Aaron: I'd prefer a lang feature rather than library. At the end of the day we want an integral value. What does the conversion function look like as an integral you want to pass off to somewhere else. If people want to have compat code between C and C++ they are going to use macros. The unsigned bit_int is going to trip up so many people. I see it useful to have it as a library, but we won't have the generality with a C type.
 
-JeanHyde: We need both. If I'm on a embedded device and I need 128 bits and my vendor stops 64 but I need something bigger and larger. This would allow me to exceed what my vendor decides is a max limit. You saw it when you got the push back when you made `std::int_least_128`. They don't want to do it, implementation is complicated. If its a class type then its a library author's problem and lets you exceed the boundaries of what the vendor wants. I think we should look into what both need. But I think a fundamental type would be the best for compat.
+JeanHeyd: We need both. If I'm on a embedded device and I need 128 bits and my vendor stops 64 but I need something bigger and larger. This would allow me to exceed what my vendor decides is a max limit. You saw it when you got the push back when you made `std::int_least_128`. They don't want to do it, implementation is complicated. If its a class type then its a library author's problem and lets you exceed the boundaries of what the vendor wants. I think we should look into what both need. But I think a fundamental type would be the best for compat.
 
 CJ: We should not do both, we should do the compiler option. There is no way to make a C++ type work with a C type. We want to make ___ code. If you do it library, you won't be able to optimize your type. If you want it to be a language feature. That would a huge cost that would be a different type in library. The fact of the matter is that _BitInt as it is in C is supported by two compilers. We did look into C++ library compat and deduction, and its going to be a pain in terms of wording, most of the implementation has been done. To the argument to leverage this in format doesn't matter if its lang or lib feature. We want to be able to add these numbers in your preprocessor?
 
@@ -149,7 +149,7 @@ Ville: Seems like the fundamental type is inevitable. I don't think we can chang
 
 Jens: Its not the usual compat problems we normally use. Compatibility is really about the construction of classes. Not being able to provide _BitInt to C++ would really be a mess.
 
-Davis: Procedurally, JeanHyde wanting both could make polling more complicated, but I think having such a library type would work but would be outside of this group. But this makes the poll simple to just "Do we want this as a fundamental type in C++"
+Davis: Procedurally, JeanHeyd wanting both could make polling more complicated, but I think having such a library type would work but would be outside of this group. But this makes the poll simple to just "Do we want this as a fundamental type in C++"
 
 (no hands for changing)
 
@@ -169,35 +169,35 @@ Davis: Anything else?
 
 Jan: Nope this is great.
 
-Davis: JeanHyde, are you ready?
+Davis: JeanHeyd, are you ready?
 
-JeanHyde: offset allows you to provide a means to discard additional information from the beginning. If the offset is greater than the size of the resource then it evaluates to a length of zero. This matches the existing implementation in gcc and clang. The rest of the paper is just wording and what happens when its empty.
+JeanHeyd: offset allows you to provide a means to discard additional information from the beginning. If the offset is greater than the size of the resource then it evaluates to a length of zero. This matches the existing implementation in gcc and clang. The rest of the paper is just wording and what happens when its empty.
 
 Robert: 15.3.2. I read that in the paper and that looks different than the paper I'm looking at. What was the issue? Was this given to wording? Was R0 given or is the thing we are looking at given?
 
-JeanHyde: They saw R0 didn't have a section about when the offset goes beyond the length of the file. It discards from the full file size. I didn't write that in R0. The one that raised the concern was happy with the wording.
+JeanHeyd: They saw R0 didn't have a section about when the offset goes beyond the length of the file. It discards from the full file size. I didn't write that in R0. The one that raised the concern was happy with the wording.
 
 Ville: WG14 already adopted this? whats the compat issue here?
 
-JeanHyde: There was a difference in wording between the C and the C++.
+JeanHeyd: There was a difference in wording between the C and the C++.
 
 Ville: As far as adopting this for C++, nothing to see here, ship it. Looks good.
 
 CJ: We should be consistent with C.
 
-JeanHyde: The changes that C++ wanted is the way that the implementations are made now. But the C wording is not great so we are cleaning that up. So we are coalescence around the same behavior. Thats what the `https://open-std.org/jtc1/sc22/wg14/www/docs/n3438.htm` sync paper is all about.
+JeanHeyd: The changes that C++ wanted is the way that the implementations are made now. But the C wording is not great so we are cleaning that up. So we are coalescence around the same behavior. Thats what the `https://open-std.org/jtc1/sc22/wg14/www/docs/n3438.htm` sync paper is all about.
 
-(conversation around Robert C Seacord and JeanHyde about UB and "shall" wording in C++)
+(conversation around Robert C Seacord and JeanHeyd about UB and "shall" wording in C++)
 
 AB: Does the offset and limit values change behavior of embed?
 
-JeanHyde: There is a formula no matter the order of values.
+JeanHeyd: There is a formula no matter the order of values.
 
 AB: That makes sense and the design makes sense. Maybe the example should show the formula.
 
 Ville: If offset and limit work the way they do, why would developers ever put them in a specific order
 
-JeanHyde: We didn't want to add additional ordering complexity on implementors for an error based on out of ordering. But if they are interested in this, then we can change the design.
+JeanHeyd: We didn't want to add additional ordering complexity on implementors for an error based on out of ordering. But if they are interested in this, then we can change the design.
 
 Ville: If we force the ordering then we get rid of this confusion.
 
@@ -215,7 +215,7 @@ AB: So the ordering of limit and offset should be specifically grouped together.
 
 Ville: I can deal with that. Just so long as its afterwards.
 
-JeanHyde: These are based on GCC and clang attributes, but those can do whatever they want. I can email the implementors to see how they feel about this.
+JeanHeyd: These are based on GCC and clang attributes, but those can do whatever they want. I can email the implementors to see how they feel about this.
 
 Jens: The example on the screen limit and offset have an influence of if_empty so having the reverse order of these would be confusing.
 
