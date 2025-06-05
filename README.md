@@ -23,12 +23,177 @@ Feel free to contact us when necessary.
 
 This document contains summaries of SG22 meetings held during 2024.
 
-- [May 5th, 2025](#January-31st-2025) - CWG3017 and P3412R1
+- [Jun 4th, 2025](#une-4th-2025) - CWG3017 and P3412R1
+- [May 5th, 2025](#May-5th-2025) - CWG3017 and P3412R1
 - [January 30th, 2025](#January-30th-2025) - P2746, P2142, and P3248
 - [January 7th, 2025](#January-7th-2025) - P3477R0, P3475R0, and P3384R0
 - [August 28th, 2024](#August-28th-2024) - P3309 and P3140
 - [July 26th, 2024](#July-26th-2024) - P2865 and P2866
 - [February 1st, 2024](#February-1st-2024) - Provenance and Memory Model Discussion
+
+# June 4th, 2025
+## Agenda
+
+## Attendees
+
+## Minutes
+Jan: There has been multiple implementors that state that the labels can be implemented. GCC already supports this. WG14 will figure this out and then we can copy and paste into C++. N3355 syntax is the conclusion. But C++ should try and fix these pre-emptively. The concern is that the label syntax is still extremely limited. Macro expansion could result in label duplication which will fail compilation. This proposal lifts those limitations. The restrictions become apart of break, continue and goto. labels can go anywhere even multiple time and multipl elevels
+
+Corentin Jabot (CJ): We've looked into support in clang, and it was hard to implement "break label;" if the loop might have more: than: one: (even if they were different) in Clang.
+
+Jan: To clarify a single statement-
+
+CJ: The first line `label: label`, it adds a bunch of complexity without adding much value...
+
+Jan: You could run into this case if you have a loop and there is macro expansion. There are ways to organically run into this. Error when jumping to a duplicate label. And break cannot break with an unrelated loop. Labels are like comments.
+
+Davis: Just to clarify, the objection was to duplicate label or having multiple levels.
+
+CJ: Multiple levels. Having multiple adds a lot of impl complexity.
+
+Davis: You mean having multiple?
+
+CJ: No nested. Adding multiple levels of label adds complexity.
+
+JeanHyde: If you have a nested loop with the same label? In the case of goto to a label, is ambiguous, but with a set of series of nested loops and all nested loops are given the same label, but in your proposal and we jump to the nearest, but we can just require different labels.
+
+Jan: The way we can resolve the ambiguous is with shadowing. This is permitted by Rust currently. Java and JS doesn't, but Rust has support. Maybe it doesn't have to be ill-formed, it could just be a compiler warning.
+
+Aaron Ballman (AB): goto goes to another label, and we just have to go there. But with continue and break, there is more semantics for determining where to go and adding additional labels makes things far more complicated. We can do it, but its complicated and the value proposition isn't clear yet.
+
+Ville: Maybe late, but the chosen direction continues to displease me. a big part of the motivation is that other languages do this. I cannot agree with those rationale and none of those langs don't have goto
+
+Jan: Thats not true. Go has goto. D has goto. I do have a list.
+
+Ville: There is a bunch mentioned as a compat goal. But thats not the case for rust and java. And then we run into these consequential problems where we have these ambiguities. When we make a label that isn't attached ot a loop but it isn't. We won't have this problem if that label wasn't attached to the loop and not the surrounding scope. What we are looking at here is fixing a self inflicted problem. I find it unfortunate. We are reusing the syntax of one thing for another. This just adds additional bug fixes to the language and bugs in the software.
+
+Alex: The paper N3474 just abandons the idea of scoped labels to make it simple and easier.
+
+Jan: (from Davis) I'd like a vote of either going with just C has or if there is demand for this feature.
+
+Jens: You [Jan] may want to wait until things settle down on the C side of things and then we should have a more clear view for C++.
+
+Jan: We have until C++29
+
+Jens: Understood, we should wait then.
+
+Davis: Contextual comment: Its good that we are discussing this in WG14, macros are more common in C than C++ and this also is of interest that the macros interact with the question of nested labels on loops. I don't see a procedural reason for a liaison opinion other than the WG14. Is there anything other than the discussion going on with Alex's paper that you want Jan?
+
+Jan: No it boils down to just the labels are doing.
+
+Davis: So the only poll I can think of is that the combined group with the SG22 people that is C on C++, would be to give feedback to WG14. We could make a poll that WG14 consider input from C++ committee.
+
+Walter E Brown: I'm not a big proponent of this feature. I want to check on piece of understanding. Today, I can go to that label and it initiates a loop. If I'm allowed to break and continue to a label, if I break or continue would I go somewhere else than goto?
+
+Davis: You end up at the increment before the iterators.
+
+Jan: The label is just a label for the loop.
+
+Walter: I think its terrible for a label to have multiple meanings. Its one more things we have to teach people, that the meaning of a label is context dependant. I plan to vote against this.
+
+Davis: There may be a situation where this works. You can think of a label as a location in code. (first reason missed). Recently C made it possible to have a label at the end of a compound statement and there is no code there. This is defined as a null statement. A label is a "lable" for a statement, and if you label names a for loop then breaking the for loop breaks the for loop. The label on the loop and breaking it breaks the loop.
+
+(migrate to next paper by Jan)
+
+Jan: C23 added _BitInt type. Variable length integers. There are a ton of benefits to this. Simply providing 128 bit integers would be a great use case here. There is an implementation in GCC and Clang. Clang provides 8 million bit integers. Do we make this a fundamental type or a class type? We can type alias `_BitInt(N)`. There is precedent for the library side of things. The major argument for the fundamental types is that it can do more. You can use it as the type in a bit field, usage within switch statements as well as deduction properties. You could take an type template of BitInt of arbitrary length. Fundamental integer types do have issues such as implicit conversions, narrowing, etc. BitInt does not have this issue in C luckily. Problems with common spelling of class types is that `_BitInt(N)` and `unsigned _BitInt(N)` have the unsigned outside which makes C++ require the usage of macros to create an alias for unsigned types. Class types are nice in that they are easier to implement and teach. If MSVC doesn't support `_BitInt`, then we can make this a pure class and we do not need any builtins we can just implement it.
+
+Davis: Just to clarify, you do not expect that MSVC will not implement _BitInt?
+
+Jan: I don't know how long it would take for them to add support.
+
+JeanHyde: One of the benefits of the library choice is that you disconnect from compiler implementation. We can implement this outside of vendor support.
+
+(back to slides)
+
+Jan: If you make it fundamental type, this adds a lot of additional support across `<numeric>`, `<bit>`, `<charconv>`, etc. Using a library type doesn't get this by default and its easier to ship it as a self contain product. But there is no user expectation that it works with everything out of the box.
+
+Aaron: I'd prefer a lang feature rather than library. At the end of the day we want an integral value. What does the conversion function look like as an integral you want to pass off to somewhere else. If people want to have compat code between C and C++ they are going to use macros. The unsigned bit_int is going to trip up so many people. I see it useful to have it as a library, but we won't have the generality with a C type.
+
+JeanHyde: We need both. If I'm on a embedded device and I need 128 bits and my vendor stops 64 but I need something bigger and larger. This would allow me to exceed what my vendor decides is a max limit. You saw it when you got the push back when you made `std::int_least_128`. They don't want to do it, implementation is complicated. If its a class type then its a library author's problem and lets you exceed the boundaries of what the vendor wants. I think we should look into what both need. But I think a fundamental type would be the best for compat.
+
+CJ: We should not do both, we should do the compiler option. There is no way to make a C++ type work with a C type. We want to make ___ code. If you do it library, you won't be able to optimize your type. If you want it to be a language feature. That would a huge cost that would be a different type in library. The fact of the matter is that _BitInt as it is in C is supported by two compilers. We did look into C++ library compat and deduction, and its going to be a pain in terms of wording, most of the implementation has been done. To the argument to leverage this in format doesn't matter if its lang or lib feature. We want to be able to add these numbers in your preprocessor?
+
+Jan: Couldn't that work with user defined literals?
+
+(discussion about whether this is possible)
+
+Robert C Seacord (RS): Fundamental type. I disagree with the teachability with using classes compared to it being a fundamental type. The biggest problem I have is, to get audiences is to talk about both C and C++. And going the library route would made this more complicated.
+
+Ville: Seems like the fundamental type is inevitable. I don't think we can change every type to have different promotion rules etc. There will be C and C++ code. And the macro expansion is just going to happen. I'm not convinced that any crowd near here should care about the library support. You can get an implementation of the big int from github. If you need compat, then you'll use the fundamental. If you need something larger, then use a library.
+
+Jens: Its not the usual compat problems we normally use. Compatibility is really about the construction of classes. Not being able to provide _BitInt to C++ would really be a mess.
+
+Davis: Procedurally, JeanHyde wanting both could make polling more complicated, but I think having such a library type would work but would be outside of this group. But this makes the poll simple to just "Do we want this as a fundamental type in C++"
+
+(no hands for changing)
+
+POLL: The WG14 delegation to SG22 believes that the C++ type family that deliberately corresponds to _BitInt (perhaps via compatibility macros be)
+
+SF  F  N  L  SL
+
+ 8  1  1  0  0
+
+POLL: WG21
+
+SF  F  N  L  SL
+
+ 4  5  0  0  0
+
+Davis: Anything else?
+
+Jan: Nope this is great.
+
+Davis: JeanHyde, are you ready?
+
+JeanHyde: offset allows you to provide a means to discard additional information from the beginning. If the offset is greater than the size of the resource then it evaluates to a length of zero. This matches the existing implementation in gcc and clang. The rest of the paper is just wording and what happens when its empty.
+
+Robert: 15.3.2. I read that in the paper and that looks different than the paper I'm looking at. What was the issue? Was this given to wording? Was R0 given or is the thing we are looking at given?
+
+JeanHyde: They saw R0 didn't have a section about when the offset goes beyond the length of the file. It discards from the full file size. I didn't write that in R0. The one that raised the concern was happy with the wording.
+
+Ville: WG14 already adopted this? whats the compat issue here?
+
+JeanHyde: There was a difference in wording between the C and the C++.
+
+Ville: As far as adopting this for C++, nothing to see here, ship it. Looks good.
+
+CJ: We should be consistent with C.
+
+JeanHyde: The changes that C++ wanted is the way that the implementations are made now. But the C wording is not great so we are cleaning that up. So we are coalescence around the same behavior. Thats what the `https://open-std.org/jtc1/sc22/wg14/www/docs/n3438.htm` sync paper is all about.
+
+(conversation around Robert C Seacord and JeanHyde about UB and "shall" wording in C++)
+
+AB: Does the offset and limit values change behavior of embed?
+
+JeanHyde: There is a formula no matter the order of values.
+
+AB: That makes sense and the design makes sense. Maybe the example should show the formula.
+
+Ville: If offset and limit work the way they do, why would developers ever put them in a specific order
+
+JeanHyde: We didn't want to add additional ordering complexity on implementors for an error based on out of ordering. But if they are interested in this, then we can change the design.
+
+Ville: If we force the ordering then we get rid of this confusion.
+
+Davis: We are running out of time...
+
+AB: That ship is sailed. So we'd be breaking user code.
+
+Davis: I thought C23 didn't have offset
+
+AB: It has the rest except offset
+
+Ville: Thats not weird at all that this must be ordered in a specific ordering. So this hasn't shipped.
+
+AB: So the ordering of limit and offset should be specifically grouped together.
+
+Ville: I can deal with that. Just so long as its afterwards.
+
+JeanHyde: These are based on GCC and clang attributes, but those can do whatever they want. I can email the implementors to see how they feel about this.
+
+Jens: The example on the screen limit and offset have an influence of if_empty so having the reverse order of these would be confusing.
+
+Davis: This would have to be outside of this meeting. We should see this in the next SG22 meeting.
 
 
 # May 5th, 2025
