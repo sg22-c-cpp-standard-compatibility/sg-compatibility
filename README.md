@@ -153,9 +153,9 @@ Davis: Procedurally, JeanHeyd wanting both could make polling more complicated, 
 
 (no hands for changing)
 
-POLL: The WG14 delegation to SG22 believes that the C++ type family that deliberately corresponds to _BitInt (perhaps via compatibility macros be)
+The WG14 delegation to SG22 believes that the C++ type family that deliberately corresponds to _BitInt (perhaps via compatibility macros) should be...
 
-SF  F  N  L  SL
+SF F N L SL (Fundamental/Library)
 
  8  1  1  0  0
 
