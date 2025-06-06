@@ -159,7 +159,7 @@ SF F N L SL (Fundamental/Library)
 
  8  1  1  0  0
 
-POLL: WG21
+WG21
 
 SF  F  N  L  SL
 
