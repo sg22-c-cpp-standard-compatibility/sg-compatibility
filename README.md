@@ -1,27 +1,31 @@
 
 # SG22 Compatibility
 
-Welcome to the SG22 C & C++ Compatibility Repository. Here you will find meeting minutes, presentations, notes, documentation, and tracking for various compatibility issues between C and C++.
+Welcome to the SG22 C & C++ Compatibility Repository.
+Here you will find meeting minutes, presentations, notes, documentation, and tracking for various compatibility issues between C and C++.
 
-Go through the [issues list here](https://github.com/sg22-c-cpp-standard-compatibility/sg-compatibility/issues) if you want to see if there is a compatibility issue that is open for something you care about. Look at the [closed issues list](https://github.com/sg22-c-cpp-standard-compatibility/sg-compatibility/issues?q=is%3Aissue+is%3Aclosed) to see if this is something that has already been addressed.
+Go through the [issues list here](https://github.com/sg22-c-cpp-standard-compatibility/sg-compatibility/issues) if you want to see if there is a compatibility issue that is open for something you care about.
+Look at the [closed issues list](https://github.com/sg22-c-cpp-standard-compatibility/sg-compatibility/issues?q=is%3Aissue+is%3Aclosed) to see if this is something that has already been addressed.
 
-# Chairs
+See also the [SG22 schedule](https://github.com/orgs/cplusplus/projects/52) for tracking of papers to be seen by SG22.
+
+## Chairs
 
 - Nina Dinka Ranns (primarily Working Group 21 - C++)
-- Davis Herring (primarily Working Group 21 - C++, co-chair)
+- [Jan Schultke (Working Group 21 - C++, vice chair)](mailto:janschultke@gmail.com)
 - [JeanHeyd Meneide (primarily Working Group 14 - C)](mailto:wg14@soasis.org)
 
 Feel free to contact us when necessary.
 
 
-# Useful Reading
+## Useful Reading
 
 - For a good, high-level overview of C and C++ compatibility issues and (intentional) divergence, see Aaron Ballman's excellent [P2735 - C XOR C++](https://wg21.link/p2735r0).
 
 
-# SG22 2024 Meeting Summaries
+## SG22 Meeting Summaries
 
-This document contains summaries of SG22 meetings held during 2024.
+This document contains summaries of SG22 meetings.
 
 - [October 8th, 2025](meetings/2025-10-08.md) - P3666, P3540, P3731
 - [Jun 4th, 2025](meetings/2025-06-04.md) - P3540, P3568, and P3539
