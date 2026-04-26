@@ -40,5 +40,5 @@ This document contains summaries of SG22 meetings.
 
 ## C2y compatibility status
 
-See the [C2y Compatibility](c2y.md) page
+See the [C2y Compatibility](c2y-compatibility.md) page
 for efforts to establish compatibility between C2y and C++.
