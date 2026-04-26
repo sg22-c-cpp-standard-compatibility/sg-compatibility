@@ -36,3 +36,9 @@ This document contains summaries of SG22 meetings.
 - [August 28th, 2024](meetings/2024-08-28.md) - P3309 and P3140
 - [July 26th, 2024](meetings/2024-07-26.md) - P2865 and P2866
 - [February 1st, 2024](meetings/2024-02-01.md) - Provenance and Memory Model Discussion
+
+
+## C2y compatibility status
+
+See the [C2y Compatibility](c2y.md) page
+for efforts to establish compatibility between C2y and C++.
