@@ -220,7 +220,9 @@ as well as the C++ compatibility status.
       Standardize <code>strnlen</code> and <code>wcsnlen</code>
     </td>
     <td></td>
-    <td>⚠️ Library feature</td>
+    <td>
+      <a href="https://github.com/sg22-c-cpp-standard-compatibility/sg-compatibility/issues/63">#63</a>
+    </td>
   </tr>
   <tr>
     <td>
@@ -328,7 +330,9 @@ as well as the C++ compatibility status.
       Restartable Functions for Efficient Character Conversions
     </td>
     <td></td>
-    <td>⚠️ Library feature</td>
+    <td>
+      <a href="https://github.com/sg22-c-cpp-standard-compatibility/sg-compatibility/issues/64">#64</a>
+    </td>
   </tr>
   <tr>
     <td>
@@ -725,10 +729,12 @@ as well as the C++ compatibility status.
   <tr>
     <td>
       <a href="https://www.open-std.org/jtc1/sc22/wg14/www/docs/n3715.pdf">N3715</a>
-      <code>static_assert</code> expressions, v2.2
+      Static assertions in expressions, v2.2
     </td>
     <td></td>
-    <td>⚠️ Core feature</td>
+    <td>
+      <a href="https://github.com/sg22-c-cpp-standard-compatibility/sg-compatibility/issues/65">#65</a>
+    </td>
   </tr>
   <tr>
     <td>
@@ -929,12 +935,10 @@ as well as the C++ compatibility status.
 Explanation for the *Status* column:
 
 <dl>
+  <dt>✅ C++</dt>
+  <dd>Change is compatible with C++.</dd>
   <dt>#NN</dt>
   <dd>See the tracking issue for status.</dd>
-  <dt>⚠️ Core feature</dt>
-  <dd>New C core language feature.</dd>
-  <dt>⚠️ Library feature</dt>
-  <dd>New C library feature.</dd>
   <dt>C wording</dt>
   <dd>
     Change to C wording (usually a fix).
