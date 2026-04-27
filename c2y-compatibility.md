@@ -778,7 +778,7 @@ as well as the C++ compatibility status.
   </tr>
   <tr>
     <td>
-      <a href="https://www.open-std.org/jtc1/sc22/wg14/www/docs/n3733.htm">N3733</a>
+      <a href="https://www.open-std.org/jtc1/sc22/wg14/www/docs/n3773.htm">N3773</a>
       C23 Issues Resolution
     </td>
     <td></td>
