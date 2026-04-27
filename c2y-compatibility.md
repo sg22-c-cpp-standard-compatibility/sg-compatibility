@@ -832,10 +832,10 @@ as well as the C++ compatibility status.
   <tr>
     <td>
       <a href="https://www.open-std.org/jtc1/sc22/wg14/www/docs/n3833.htm">N3833</a>
-      Integer Constant Expression-Initialized <code>const</code> Integer-Typed Declarations are Implicitly constexpr, r4
+      Integer Constant Expression-Initialized <code>const</code> Integer-Typed Declarations are Implicitly <code>constexpr</code>, r4
     </td>
     <td></td>
-    <td></td>
+    <td>✅ C++11</td>
   </tr>
   <tr>
     <td>
