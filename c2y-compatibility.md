@@ -88,7 +88,9 @@ as well as the C++ compatibility status.
       Accessing byte arrays, v4
     </td>
     <td></td>
-    <td></td>
+    <td>
+      <a href="https://github.com/sg22-c-cpp-standard-compatibility/sg-compatibility/issues/66">#66</a>
+    </td>
   </tr>
   <tr>
     <td>
@@ -138,7 +140,7 @@ as well as the C++ compatibility status.
       Floating-point exception for Macro Replacements
     </td>
     <td></td>
-    <td></td>
+    <td>C wording</td>
   </tr>
   <tr>
     <td>
@@ -469,7 +471,7 @@ as well as the C++ compatibility status.
       Integer and Arithmetic Constant Expressions
     </td>
     <td></td>
-    <td></td>
+    <td>C wording</td>
   </tr>
   <tr>
     <td>
@@ -612,7 +614,7 @@ as well as the C++ compatibility status.
       <code>static_assert</code> without UB
     </td>
     <td></td>
-    <td></td>
+    <td>C wording</td>
   </tr>
   <tr>
     <td>
@@ -689,7 +691,7 @@ as well as the C++ compatibility status.
       Make text consistent between <code>creal</code> and <code>cimag</code>
     </td>
     <td></td>
-    <td></td>
+    <td>Editorial</td>
   </tr>
   <tr>
     <td>
@@ -827,7 +829,7 @@ as well as the C++ compatibility status.
       Clean up atomics, non-normative changes, v7
     </td>
     <td></td>
-    <td></td>
+    <td>Editorial</td>
   </tr>
   <tr>
     <td>
@@ -843,7 +845,7 @@ as well as the C++ compatibility status.
       Wording Improvement: Generation of Non-Value Representation
     </td>
     <td></td>
-    <td></td>
+    <td>Editorial</td>
   </tr>
   <tr>
     <td>
@@ -851,7 +853,7 @@ as well as the C++ compatibility status.
       Preferred Quantum Exponent
     </td>
     <td></td>
-    <td></td>
+    <td>Editorial</td>
   </tr>
   <tr>
     <td>
