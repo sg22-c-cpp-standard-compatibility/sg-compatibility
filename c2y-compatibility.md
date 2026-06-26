@@ -5,15 +5,10 @@ That is, with the next version of the C standard after C23.
 Find below a table of all papers that have been merged into the C2y working draft,
 as well as the C++ compatibility status.
 
-> [!WARNING]
-> This table is not yet complete.
-> Empty cells will be filled over time,
-> and tracking issues will be opened where necessary.
-
 <table>
   <tr>
     <th>WG14 Paper</th>
-    <th>WG21 Paper/Issue</th>
+    <th>WG21 Paper/Issue or Comment</th>
     <th>Status</th>
   </tr>
   <tr>
@@ -72,7 +67,7 @@ as well as the C++ compatibility status.
       Slay Some Earthly Demons I
     </td>
     <td></td>
-    <td></td>
+    <td>C wording</td>
   </tr>
   <tr>
     <td>
@@ -80,7 +75,7 @@ as well as the C++ compatibility status.
       <code>fopen</code> <code>&quot;p&quot;</code> and bring <code>fopen</code>'s mode closer to POSIX 202x
     </td>
     <td></td>
-    <td></td>
+    <td>C lib. inh.</td>
   </tr>
   <tr>
     <td>
@@ -107,7 +102,7 @@ as well as the C++ compatibility status.
       <a href="https://www.open-std.org/jtc1/sc22/wg14/www/docs/n3260.pdf">N3260</a>
       <code>_Generic</code> selection expression with a type operand
     </td>
-    <td></td>
+    <td>Related to <code>_Generic</code></td>
     <td>Not relevant</td>
   </tr>
   <tr>
@@ -123,8 +118,8 @@ as well as the C++ compatibility status.
       <a href="https://www.open-std.org/jtc1/sc22/wg14/www/docs/n3274.pdf">N3274</a>
       Remove imaginary types, v3
     </td>
-    <td></td>
-    <td></td>
+    <td>Related to <code>_Imaginary</code></td>
+    <td>Not relevant</td>
   </tr>
   <tr>
     <td>
@@ -132,7 +127,7 @@ as well as the C++ compatibility status.
       <code>strftime</code> broken-down structure usage (Option 1: Undefined Behavior)
     </td>
     <td></td>
-    <td></td>
+    <td>C lib. inh.</td>
   </tr>
   <tr>
     <td>
@@ -232,7 +227,7 @@ as well as the C++ compatibility status.
       Slay Some Earthly Demons II
     </td>
     <td></td>
-    <td></td>
+    <td>C wording</td>
   </tr>
   <tr>
     <td>
@@ -240,7 +235,7 @@ as well as the C++ compatibility status.
       Slay Some Earthly Demons III
     </td>
     <td></td>
-    <td></td>
+    <td>C wording</td>
   </tr>
   <tr>
     <td>
@@ -248,7 +243,7 @@ as well as the C++ compatibility status.
       Slay Some Earthly Demons IV
     </td>
     <td></td>
-    <td></td>
+    <td>C wording</td>
   </tr>
   <tr>
     <td>
@@ -256,7 +251,7 @@ as well as the C++ compatibility status.
       Slay Some Earthly Demons VI
     </td>
     <td></td>
-    <td></td>
+    <td>C wording</td>
   </tr>
   <tr>
     <td>
@@ -264,7 +259,7 @@ as well as the C++ compatibility status.
       Slay Some Earthly Demons VII
     </td>
     <td></td>
-    <td></td>
+    <td>C wording</td>
   </tr>
   <tr>
     <td>
@@ -272,7 +267,7 @@ as well as the C++ compatibility status.
       Slay Some Earthly Demons VIII
     </td>
     <td></td>
-    <td></td>
+    <td>C wording</td>
   </tr>
   <tr>
     <td>
@@ -375,7 +370,7 @@ as well as the C++ compatibility status.
       range error definition followup
     </td>
     <td></td>
-    <td></td>
+    <td>C lib. inh.</td>
   </tr>
   <tr>
     <td>
@@ -383,7 +378,7 @@ as well as the C++ compatibility status.
       <code>&lt;stdarg.h&gt;</code> Wording
     </td>
     <td></td>
-    <td></td>
+    <td>C wording</td>
   </tr>
   <tr>
     <td>
@@ -391,7 +386,7 @@ as well as the C++ compatibility status.
       SIGFPE and I/O (v2)
     </td>
     <td></td>
-    <td></td>
+    <td>C lib. inh.</td>
   </tr>
   <tr>
     <td>
@@ -407,7 +402,7 @@ as well as the C++ compatibility status.
       Slay Some Earthly Demons X
     </td>
     <td></td>
-    <td></td>
+    <td>C wording</td>
   </tr>
   <tr>
     <td>
@@ -415,7 +410,7 @@ as well as the C++ compatibility status.
       Slay Some Earthly Demons XI
     </td>
     <td></td>
-    <td></td>
+    <td>C wording</td>
   </tr>
   <tr>
     <td>
@@ -423,7 +418,7 @@ as well as the C++ compatibility status.
       Slay Some Earthly Demons XII
     </td>
     <td></td>
-    <td></td>
+    <td>C wording</td>
   </tr>
   <tr>
     <td>
@@ -431,7 +426,7 @@ as well as the C++ compatibility status.
       Slay Some Earthly Demons XIV
     </td>
     <td></td>
-    <td></td>
+    <td>C wording</td>
   </tr>
   <tr>
     <td>
@@ -439,7 +434,7 @@ as well as the C++ compatibility status.
       Chasing Ghost I - Constant Expressions
     </td>
     <td></td>
-    <td></td>
+    <td>C wording</td>
   </tr>
   <tr>
     <td>
@@ -447,7 +442,7 @@ as well as the C++ compatibility status.
       Chasing Ghosts II - Accessing Allocated Storage
     </td>
     <td></td>
-    <td></td>
+    <td>C wording</td>
   </tr>
   <tr>
     <td>
@@ -455,7 +450,7 @@ as well as the C++ compatibility status.
       Initialization of Anonymous Structures and Unions (v2)
     </td>
     <td></td>
-    <td></td>
+    <td>✅ C++</td>
   </tr>
   <tr>
     <td>
@@ -479,7 +474,7 @@ as well as the C++ compatibility status.
       Complex Operators
     </td>
     <td></td>
-    <td></td>
+    <td>C wording</td>
   </tr>
   <tr>
     <td>
@@ -487,7 +482,7 @@ as well as the C++ compatibility status.
       Clarifications on Null Pointers in the Library
     </td>
     <td></td>
-    <td>C wording</td>
+    <td>C lib. inh.</td>
   </tr>
   <tr>
     <td>
@@ -503,7 +498,7 @@ as well as the C++ compatibility status.
       Slay Some Earthly Demons XIII
     </td>
     <td></td>
-    <td></td>
+    <td>C wording</td>
   </tr>
   <tr>
     <td>
@@ -511,7 +506,7 @@ as well as the C++ compatibility status.
       Slay Some Earthly Demons XVI
     </td>
     <td></td>
-    <td></td>
+    <td>C wording</td>
   </tr>
   <tr>
     <td>
@@ -519,7 +514,7 @@ as well as the C++ compatibility status.
       Slay Some Earthly Demons XVII
     </td>
     <td></td>
-    <td></td>
+    <td>C wording</td>
   </tr>
   <tr>
     <td>
@@ -553,15 +548,15 @@ as well as the C++ compatibility status.
       Slay Some Earthly Demons IX
     </td>
     <td></td>
-    <td></td>
+    <td>C wording</td>
   </tr>
   <tr>
     <td>
       <a href="https://www.open-std.org/jtc1/sc22/wg14/www/docs/n3348.pdf">N3348</a>
       Matching of Multi-Dimensional Arrays in Generic Selection Expressions
     </td>
-    <td></td>
-    <td></td>
+    <td>Related to <code>_Imaginary</code></td>
+    <td>Not relevant</td>
   </tr>
   <tr>
     <td>
@@ -582,7 +577,7 @@ as well as the C++ compatibility status.
       Slay Some Earthly Demons V
     </td>
     <td></td>
-    <td></td>
+    <td>C wording</td>
   </tr>
   <tr>
     <td>
@@ -605,8 +600,11 @@ as well as the C++ compatibility status.
       <a href="https://www.open-std.org/jtc1/sc22/wg14/www/docs/n3517.htm">N3517</a>
       Array subscripting without decay
     </td>
-    <td></td>
-    <td></td>
+    <td>
+      <a href="https://wg21.link/CWG1213">CWG1213</a>
+      Array subscripting and xvalues
+    </td>
+    <td>✅ C++14</td>
   </tr>
   <tr>
     <td>
@@ -662,7 +660,7 @@ as well as the C++ compatibility status.
       Chasing Ghosts I: Constant Expressions and Objects of Known Constant Size
     </td>
     <td></td>
-    <td></td>
+    <td>C wording</td>
   </tr>
   <tr>
     <td>
@@ -710,15 +708,15 @@ as well as the C++ compatibility status.
       Slay Some Earthly Demons XIV: Definition of Main
     </td>
     <td></td>
-    <td></td>
+    <td>C wording</td>
   </tr>
   <tr>
     <td>
       <a href="https://www.open-std.org/jtc1/sc22/wg14/www/docs/n3652.pdf">N3652</a>
       Composite types v1.3
     </td>
-    <td></td>
-    <td></td>
+    <td>Related to VLAs</td>
+    <td>Not relevant</td>
   </tr>
   <tr>
     <td>
@@ -726,7 +724,7 @@ as well as the C++ compatibility status.
       Allowing calling <code>static inline</code> within <code>extern inline</code>
     </td>
     <td></td>
-    <td></td>
+    <td>C wording</td>
   </tr>
   <tr>
     <td>
@@ -775,8 +773,8 @@ as well as the C++ compatibility status.
       <a href="https://www.open-std.org/jtc1/sc22/wg14/www/docs/n3655.pdf">N3655</a>
       Make implicit undefined behavior in <code>mtx_destroy()</code> explicit, Mutex Option 2
     </td>
-    <td></td>
-    <td></td>
+    <td>Related to <code>&lt;thread.h&gt;</code></td>
+    <td>Not relevant</td>
   </tr>
   <tr>
     <td>
@@ -784,7 +782,7 @@ as well as the C++ compatibility status.
       C23 Issues Resolution
     </td>
     <td></td>
-    <td></td>
+    <td>C wording</td>
   </tr>
   <tr>
     <td>
@@ -820,8 +818,8 @@ as well as the C++ compatibility status.
       <a href="https://www.open-std.org/jtc1/sc22/wg14/www/docs/n3786.htm">N3786</a>
       Remove Imaginary I, v3
     </td>
-    <td></td>
-    <td></td>
+    <td>Related to <code>&lt;complex.h&gt;</code></td>
+    <td>Not relevant</td>
   </tr>
   <tr>
     <td>
@@ -861,7 +859,7 @@ as well as the C++ compatibility status.
       Clean up <code>frexp</code>, <code>ldexp</code>, <code>scalbn</code>
     </td>
     <td></td>
-    <td></td>
+    <td>Editorial</td>
   </tr>
   <tr>
     <td>
@@ -882,14 +880,14 @@ as well as the C++ compatibility status.
       Busting Another Ghost: UB#11: Value of <code>auto</code> Object
     </td>
     <td></td>
-    <td></td>
+    <td>C wording</td>
   </tr>
   <tr>
     <td>
       <a href="https://www.open-std.org/jtc1/sc22/wg14/www/docs/n3722.pdf">N3722</a>
       Generic Replacement and Immediate Constants
     </td>
-    <td></td>
+    <td>Related to <code>_Generic</code></td>
     <td>Not relevant</td>
   </tr>
   <tr>
@@ -948,9 +946,17 @@ Explanation for the *Status* column:
     or only necessary in the C wording.
     Normative defects that need action in C++ should not have this status.
   </dd>
+  <dt>C lib. inh.</dt>
+  <dd>
+    Change to the behavior of existing C library facilities.
+    These changes are inherited automatically during a rebase of C++ onto the latest C standard,
+    and require no action on the part of C++,
+    other than possibly documenting the change in Annex C.
+  </dd>
   <dt>Not relevant</dt>
   <dd>
-    Won't be ported to C++, such as anything relating to <code>_Generic</code>.
+    Relates to C features that currently have no C++ counterpart,
+    such as anything relating to <code>_Generic</code>.
   </dd>
   <dt>Editorial</dt>
   <dd>
