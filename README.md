@@ -27,7 +27,7 @@ Feel free to contact us when necessary.
 
 This document contains summaries of SG22 meetings.
 
-- [May 15th, 2026](meetings/2026-07-08.md) - P3290R4 and P3093R0
+- [July 8th, 2026](meetings/2026-07-08.md) - P3290R4 and P3093R0
 - [May 15th, 2026](meetings/2026-05-15.md) - P3677R0 and P3935R1
 - [April 24th, 2026](meetings/2026-04-24.md) - P0085R3 and P3658R1
 - [October 8th, 2025](meetings/2025-10-08.md) - P3666, P3540, P3731
