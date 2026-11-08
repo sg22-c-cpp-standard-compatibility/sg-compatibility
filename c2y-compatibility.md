@@ -930,6 +930,138 @@ as well as the C++ compatibility status.
     <td></td>
     <td>Editorial</td>
   </tr>
+  <tr>
+    <td>
+      <a href="https://www.open-std.org/jtc1/sc22/wg14/www/docs/n3868.htm">N3868</a>
+      Add type-safe minimum and maximum type-generic macros
+    </td>
+    <td></td>
+    <td>
+      <a href="https://github.com/sg22-c-cpp-standard-compatibility/sg-compatibility/issues/69">#69</a>
+    </td>
+  </tr>
+  <tr>
+    <td>
+      <a href="https://www.open-std.org/jtc1/sc22/wg14/www/docs/n3754.txt">N3754</a>
+      Ordering (but not nesting) of <code>fprintf</code>, <code>fscanf</code>, and friends functions
+    </td>
+    <td></td>
+    <td>Editorial</td>
+  </tr>
+  <tr>
+    <td>
+      <a href="https://www.open-std.org/jtc1/sc22/wg14/www/docs/n3779.pdf">N3779</a>
+      Annex F Floating-point environment updates
+    </td>
+    <td></td>
+    <td>Not relevant</td>
+  </tr>
+  <tr>
+    <td>
+      <a href="https://www.open-std.org/jtc1/sc22/wg14/www/docs/n3787.pdf">N3787</a>
+      Array Constant Expressions
+    </td>
+    <td></td>
+    <td>✅ C++11</td>
+  </tr>
+  <tr>
+    <td>
+      <a href="https://www.open-std.org/jtc1/sc22/wg14/www/docs/n3842.pdf">N3842</a>
+      Standard pragmas and headers
+    </td>
+    <td></td>
+    <td>Editorial</td>
+  </tr>
+  <tr>
+    <td>
+      <a href="https://www.open-std.org/jtc1/sc22/wg14/www/docs/n3843.pdf">N3843</a>
+      Conflicting requirements for <code>double_t</code>
+    </td>
+    <td></td>
+    <td>C lib. inh.</td>
+  </tr>
+  <tr>
+    <td>
+      <a href="https://www.open-std.org/jtc1/sc22/wg14/www/docs/n3871.pdf">N3871</a>
+      Slay Some Earthly Demon: Storage-Class Specifiers with Compound Literals
+    </td>
+    <td></td>
+    <td>Not relevant</td>
+  </tr>
+  <tr>
+    <td>
+      <a href="https://www.open-std.org/jtc1/sc22/wg14/www/docs/n3881.htm">N3881</a>
+      Wording for "Type Compatibility: Ghosts, Readability, and a Missing Rule for Atomic"
+    </td>
+    <td></td>
+    <td>C wording</td>
+  </tr>
+  <tr>
+    <td>
+      <a href="https://www.open-std.org/jtc1/sc22/wg14/www/docs/n3882.htm">N3882</a>
+      Wording for "Ghost: Lvalues that do not designate an object"
+    </td>
+    <td></td>
+    <td>C wording</td>
+  </tr>
+  <tr>
+    <td>
+      <a href="https://www.open-std.org/jtc1/sc22/wg14/www/docs/n3896.pdf">N3896</a>
+      Range bounds for complex math functions
+    </td>
+    <td></td>
+    <td>C lib. inh.</td>
+  </tr>
+  <tr>
+    <td>
+      <a href="https://www.open-std.org/jtc1/sc22/wg14/www/docs/n3902.pdf">N3902</a>
+      Removing the Implementation-Defined Signedness of Bit-Fields
+    </td>
+    <td></td>
+    <td>Not relevant</td>
+  </tr>
+  <tr>
+    <td>
+      <a href="https://www.open-std.org/jtc1/sc22/wg14/www/docs/n3904.pdf">N3904</a>
+      Slaying the Earthly Demons of Invalid Identifier Characters (C23 UB28, UB29)
+    </td>
+    <td></td>
+    <td>C wording</td>
+  </tr>
+  <tr>
+    <td>
+      <a href="https://www.open-std.org/jtc1/sc22/wg14/www/docs/n3908.htm">N3908</a>
+      Define "macro-parameter list"
+    </td>
+    <td></td>
+    <td>Editorial</td>
+  </tr>
+  <tr>
+    <td>
+      <a href="https://www.open-std.org/jtc1/sc22/wg14/www/docs/n3911.pdf">N3911</a>
+      Slaying Some Earthly Demons - Remove C23 UB 30
+    </td>
+    <td></td>
+    <td>C wording</td>
+  </tr>
+  <tr>
+    <td>
+      <a href="https://www.open-std.org/jtc1/sc22/wg14/www/docs/n3918.htm">N3918</a>
+      Hunting Another Ghost - Macro Suppression
+    </td>
+    <td></td>
+    <td>C wording</td>
+  </tr>
+  <tr>
+    <td>
+      <a href="https://www.open-std.org/jtc1/sc22/wg14/www/docs/n3696.htm">N3696</a>
+      Update POSIX to 2024
+    </td>
+    <td></td>
+    <td>
+      <a href="https://github.com/sg22-c-cpp-standard-compatibility/sg-compatibility/issues/68">#68</a>
+    </td>
+  </tr>
 </table>
 
 Explanation for the *Status* column:
